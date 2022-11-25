@@ -1,6 +1,8 @@
 ﻿using System;
+using CollisionDetection;
 using Pinball.Presenter;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -11,11 +13,11 @@ namespace View
         private TMP_Text _ballScoreText;
         private Canvas _canvas;
         private Rigidbody _rigidbody;
-        
+
         [Inject]
         private IBallPresenter _ballPresenter;
 
-        private void Awake()
+        private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _canvas = GetComponentInChildren<Canvas>();
