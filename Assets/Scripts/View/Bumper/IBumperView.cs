@@ -1,4 +1,6 @@
-﻿namespace View
+﻿using Model.Enums;
+
+namespace View
 {
     public interface IBumperView
     {

@@ -1,4 +1,6 @@
 ﻿using Model;
+using Model.Enums;
+using UnityEngine;
 using View;
 using Zenject;
 

@@ -2,6 +2,6 @@
 {
     public class BumperModel
     {
-        public int Points { get; private set; } = 10;
+        public int Points { get; set; } = 10;
     }
 }

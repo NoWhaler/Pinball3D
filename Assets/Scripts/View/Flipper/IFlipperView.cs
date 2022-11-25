@@ -2,6 +2,6 @@
 {
     public interface IFlipperView
     {
-        void AddTorqueToFlipper();
+        void AddSpringToFlipper();
     }
 }

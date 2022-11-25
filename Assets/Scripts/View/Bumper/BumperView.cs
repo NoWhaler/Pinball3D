@@ -1,4 +1,5 @@
-﻿using Pinball.Presenter;
+﻿using Model.Enums;
+using Pinball.Presenter;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -11,13 +12,11 @@ namespace View
         // [SerializeField] private GameObject _popUpTextPrefab;
         // [SerializeField] private Vector3 _popUpTextOffset;
 
-        
-
         private IBumperPresenter _bumperPresenter;
         
         private TMP_Text _bumperPoints;
         // private TMP_Text _popUpPoints;
-        private Canvas _canvas;
+        private Canvas _canvas; 
 
         [Inject]
         private void Constructor(IBumperPresenter bumperPresenter)
