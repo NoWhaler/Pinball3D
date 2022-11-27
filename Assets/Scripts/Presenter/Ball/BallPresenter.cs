@@ -36,30 +36,12 @@ namespace Pinball.Presenter
 
         public void DealDamageToBoss()
         {
-            // _bossPresenter.ChangeHealthPoints();
-            _ballUsecase.SetScore();
+            _ballUsecase.HitBoss();
         }
         
         private void UpdateScore(BallModel ballModel)
         {
             _ballScore.Value = ballModel.Score;
         }
-        
-        // private void CountDamageValue()
-        // {
-        //     var value = _bossPresenter.ScorePoints + (_ballModel.Score - _bossPresenter.ScorePoints);
-        //     var value2 = _ballModel.Score + (_bossPresenter.ScorePoints - _ballModel.Score);
-        //     
-        //     if (_bossPresenter.ScorePoints < _ballModel.Score)
-        //     {
-        //         _ballModel.Score -= _bossPresenter.ScorePoints;
-        //         _bossPresenter.ScorePoints -= value2;
-        //     }
-        //     else
-        //     {
-        //         _ballModel.Score -= _ballModel.Score;
-        //         _bossPresenter.ScorePoints -= value;
-        //     }
-        // }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Presenter;
+﻿using Presenter;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -19,18 +18,19 @@ namespace View
         {
             _canvas = GetComponentInChildren<Canvas>();
             _bossHealthText = _canvas.GetComponentInChildren<TMP_Text>();
-            // _bossPresenter.ChangeHealthPoints();
         }
 
 
         private void Start()
         {
-            // _bossPresenter = new BossPresenter(this);
             var reactiveProperty = _bossPresenter.BossHealth;
-            
             reactiveProperty.Subscribe((value) =>
             {
                 SetHealth(value);
+                if (value <= 0)
+                {
+                    gameObject.SetActive(false);
+                }
             }).AddTo(this);
             // SetHealth(1000);
         }

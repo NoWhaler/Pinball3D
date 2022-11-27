@@ -7,5 +7,7 @@ namespace Usecase
     {
         IReadOnlyReactiveProperty<BallModel> Score { get; }
         void SetScore();
+
+        void HitBoss();
     }
 }

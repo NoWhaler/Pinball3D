@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AI;
+using Model.Enums;
 using Pinball.Presenter;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace View
         private TMP_Text _ballScoreText;
         private Canvas _canvas;
         private Rigidbody _rigidbody;
+        private BumperType _bumperType;
 
         private int _score;
 
@@ -27,11 +29,9 @@ namespace View
 
         private void Start()
         {
-            // _ballPresenter.SetBallScore();
             var reactiveProperty = _ballPresenter.BallScore;
             
-            reactiveProperty.Subscribe((value) =>
-            {
+            reactiveProperty.Subscribe((value) => {
                 SetScore(value);
             }).AddTo(this);
             SetScore(0);
@@ -54,6 +54,13 @@ namespace View
             {
                 _ballPresenter.SetBallScore();
             }
+            
+            var bossView = collision.collider.GetComponent<BossView>();
+            if (bossView != null)
+            {
+                _ballPresenter.DealDamageToBoss();
+            }
+            
         }
     }
 }

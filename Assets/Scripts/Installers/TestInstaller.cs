@@ -8,7 +8,10 @@ public class TestInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
+        var ballGateway = new BallGateway();
+        var bossGateway = new BossGateway();
         var bumperGateway = new BumperGateway();
+        
         var bumperUsecase = new BumperUsecase(bumperGateway);
         var bumperPresenter = gameObject.AddComponent<BumperPresenter>();
         bumperPresenter.Initialize(bumperUsecase);
@@ -18,8 +21,9 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBumperPresenter>().FromInstance(bumperPresenter);
 
 
-        var ballGateway = new BallGateway();
-        var ballUsecase = new BallUsecase(ballGateway);
+        
+        
+        var ballUsecase = new BallUsecase(ballGateway, bossGateway);
         var ballPresenter = gameObject.AddComponent<BallPresenter>();
         ballPresenter.Initialize(ballUsecase);
 
@@ -29,8 +33,8 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBallPresenter>().FromInstance(ballPresenter);
 
         
-        var bossGateway = new BossGateway();
-        var bossUsecase = new BossUsecase(bossGateway);
+        
+        var bossUsecase = new BossUsecase(bossGateway, ballGateway);
         var bossPresenter = gameObject.AddComponent<BossPresenter>();
         bossPresenter.Initialize(bossUsecase);
         

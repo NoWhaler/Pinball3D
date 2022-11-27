@@ -45,22 +45,13 @@ namespace Gateway
 
         public int GetBumperValue(BumperType bumperType)
         {
-            if (bumperType == BumperType.Five)
+            return bumperType switch
             {
-                return 5;
-            }
-            if (bumperType == BumperType.Ten)
-            {
-                return 10;
-            }
-            if (bumperType == BumperType.Twenty)
-            {
-                return 20;
-            }
-            else
-            {
-                return 0;
-            }
+                BumperType.Five => 5,
+                BumperType.Ten => 10,
+                BumperType.Twenty => 20,
+                _ => 0
+            };
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using Model.Enums;
+using UniRx;
 
 namespace Pinball.Presenter
 {

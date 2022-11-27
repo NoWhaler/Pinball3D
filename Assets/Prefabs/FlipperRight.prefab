@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8133059610170585272}
-  m_LocalRotation: {x: -0, y: 0.5, z: -0, w: 0.8660254}
+  m_LocalRotation: {x: 0, y: 0.5, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 1.4755, y: 0.7, z: -1.3564}
   m_LocalScale: {x: 0.39999998, y: 0.4, z: 1.976579}
   m_ConstrainProportionsScale: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _minLimit: 0
   _maxLimit: 60
-  _springForce: 5000
+  _springForce: 10000
   _springDamper: 1
   _hingeJoint: {fileID: 0}
+  _flipperType: 1
