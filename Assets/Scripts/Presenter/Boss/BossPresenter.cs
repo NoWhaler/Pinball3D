@@ -1,17 +1,37 @@
 ﻿using Model;
+using UniRx;
+using UnityEngine;
+using Usecase;
 using View;
+using Zenject;
 
 namespace Presenter
 {
-    public class BossPresenter: IBossPresenter
+    public class BossPresenter: MonoBehaviour, IBossPresenter
     {
-        private IBossView _bossView;
-        private BossModel _bossModel;
+        private IBossUsecase _bossUsecase;
+        
+        public IReadOnlyReactiveProperty<int> BossHealth => _bossHealth;
+        private readonly ReactiveProperty<int> _bossHealth = new ReactiveProperty<int>();
 
-        public BossPresenter(IBossView bossView)
+        public void Initialize(IBossUsecase bossUsecase)
         {
-            _bossModel = new BossModel();
-            _bossView = bossView;
+            _bossUsecase = bossUsecase;
+            var disposable = _bossUsecase.Health.Subscribe((bossModel) =>
+            {
+                UpdateHealth(bossModel);
+            });
+            UpdateHealth(_bossUsecase.Health.Value);
+        }
+        
+        private void UpdateHealth(BossModel bossModel)
+        {
+            _bossHealth.Value = bossModel.HealthPoints;
+        }
+
+        public void ChangeHealthPoints()
+        {
+            _bossUsecase.SetHealth();
         }
     }
 }

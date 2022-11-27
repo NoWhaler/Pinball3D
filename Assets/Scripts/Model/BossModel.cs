@@ -2,6 +2,6 @@
 {
     public class BossModel
     {
-        public int HealthPoints { get; set; } = 200;
+        public int HealthPoints { get; set; } = 1000;
     }
 }

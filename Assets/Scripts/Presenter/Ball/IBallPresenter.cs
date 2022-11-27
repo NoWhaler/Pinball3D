@@ -1,7 +1,11 @@
-﻿namespace Pinball.Presenter
+﻿using UniRx;
+
+namespace Pinball.Presenter
 {
     public interface IBallPresenter
     {
-        void ChangeBallScore();
+        IReadOnlyReactiveProperty<int> BallScore { get; }
+        void SetBallScore();
+        void DealDamageToBoss();
     }
 }

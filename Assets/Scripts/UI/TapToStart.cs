@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class TapToStart : MonoBehaviour
 {
-
     private void Start()
     {
         Time.timeScale = 0;

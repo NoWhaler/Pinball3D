@@ -1,7 +1,10 @@
-﻿namespace Model
+﻿using Model.Enums;
+
+namespace Model
 {
     public class BumperModel
     {
-        public int Points { get; set; } = 10;
+        public BumperType Type { get; set; }
+        public int Points { get; set; }
     }
 }

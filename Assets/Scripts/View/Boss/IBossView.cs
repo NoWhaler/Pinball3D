@@ -2,6 +2,6 @@
 {
     public interface IBossView
     {
-        
+        // void SetHealth(int health);
     }
 }

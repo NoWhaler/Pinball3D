@@ -1,10 +1,9 @@
 ﻿using System;
-using CollisionDetection;
 using Pinball.Presenter;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
+using UniRx;
 
 namespace View
 {
@@ -14,14 +13,28 @@ namespace View
         private Canvas _canvas;
         private Rigidbody _rigidbody;
 
+        private int _score;
+
         [Inject]
         private IBallPresenter _ballPresenter;
 
-        private void Start()
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _canvas = GetComponentInChildren<Canvas>();
             _ballScoreText = _canvas.GetComponentInChildren<TMP_Text>();
+        }
+
+        private void Start()
+        {
+            // _ballPresenter.SetBallScore();
+            var reactiveProperty = _ballPresenter.BallScore;
+            
+            reactiveProperty.Subscribe((value) =>
+            {
+                SetScore(value);
+            }).AddTo(this);
+            SetScore(0);
         }
 
         private void Update()
@@ -29,17 +42,17 @@ namespace View
             _rigidbody.AddForce(new Vector3(0f, 0f, -9.81f), ForceMode.Acceleration);
         }
 
-        public void SetScore(int score)
+        private void SetScore(int score)
         {
             _ballScoreText.text = score.ToString();
         }
 
-        private void OnCollisionEnter(Collision col)
+        private void OnCollisionEnter(Collision collision)
         {
-            var bumperView = col.collider.GetComponent<BumperView>();
+            var bumperView = collision.collider.GetComponent<BumperView>();
             if (bumperView != null)
             {
-                _ballPresenter.ChangeBallScore();
+                _ballPresenter.SetBallScore();
             }
         }
     }

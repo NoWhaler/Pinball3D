@@ -2,6 +2,6 @@
 {
     public interface IBallView
     {
-        void SetScore(int score);
+        // void SetScore(int score);
     }
 }
