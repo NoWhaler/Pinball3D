@@ -6,7 +6,7 @@ namespace Pinball.Presenter
     public interface IBallPresenter
     {
         IReadOnlyReactiveProperty<int> BallScore { get; }
-        void SetBallScore();
+        void SetBallScore(BumperType bumperType);
         void DealDamageToBoss();
     }
 }

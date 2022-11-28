@@ -16,31 +16,28 @@ public class TestInstaller : MonoInstaller
         var bumperPresenter = gameObject.AddComponent<BumperPresenter>();
         bumperPresenter.Initialize(bumperUsecase);
 
-        Container.Bind<IBumperGateway>().FromInstance(bumperGateway);
-        Container.Bind<IBumperUsecase>().FromInstance(bumperUsecase);
-        Container.Bind<IBumperPresenter>().FromInstance(bumperPresenter);
+        Container.Bind<IBumperGateway>().FromInstance(bumperGateway).NonLazy();
+        Container.Bind<IBumperUsecase>().FromInstance(bumperUsecase).NonLazy();
+        Container.Bind<IBumperPresenter>().FromInstance(bumperPresenter).NonLazy();
 
 
-        
-        
-        var ballUsecase = new BallUsecase(ballGateway, bossGateway);
+        var ballUsecase = new BallUsecase(ballGateway, bossGateway, bumperGateway);
         var ballPresenter = gameObject.AddComponent<BallPresenter>();
         ballPresenter.Initialize(ballUsecase);
 
        
-        Container.Bind<IBallGateway>().FromInstance(ballGateway);
-        Container.Bind<IBallUsecase>().FromInstance(ballUsecase);
-        Container.Bind<IBallPresenter>().FromInstance(ballPresenter);
+        Container.Bind<IBallGateway>().FromInstance(ballGateway).NonLazy();
+        Container.Bind<IBallUsecase>().FromInstance(ballUsecase).NonLazy();
+        Container.Bind<IBallPresenter>().FromInstance(ballPresenter).NonLazy();
 
-        
-        
+
         var bossUsecase = new BossUsecase(bossGateway, ballGateway);
         var bossPresenter = gameObject.AddComponent<BossPresenter>();
         bossPresenter.Initialize(bossUsecase);
         
-        Container.Bind<IBossGateway>().FromInstance(bossGateway);
-        Container.Bind<IBossUsecase>().FromInstance(bossUsecase);
-        Container.Bind<IBossPresenter>().FromInstance(bossPresenter);
+        Container.Bind<IBossGateway>().FromInstance(bossGateway).NonLazy();
+        Container.Bind<IBossUsecase>().FromInstance(bossUsecase).NonLazy();
+        Container.Bind<IBossPresenter>().FromInstance(bossPresenter).NonLazy();
         
     }
 }

@@ -4,6 +4,9 @@
     {
         Five,
         Ten,
-        Twenty
+        Twenty,
+        MinusFive,
+        MinusTen,
+        MinusTwenty
     }
 }

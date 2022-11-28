@@ -1,19 +1,13 @@
 ﻿using Model;
-using Presenter;
+using Model.Enums;
 using UniRx;
 using UnityEngine;
 using Usecase;
-using Zenject;
 
 namespace Pinball.Presenter
 {
     public class BallPresenter : MonoBehaviour, IBallPresenter
     {
-        // private BallModel _ballModel;
-
-        // [Inject]
-        // private IBossPresenter _bossPresenter;
-
         private IBallUsecase _ballUsecase;
 
         public IReadOnlyReactiveProperty<int> BallScore => _ballScore;
@@ -29,9 +23,9 @@ namespace Pinball.Presenter
             UpdateScore(_ballUsecase.Score.Value);
         }
 
-        public void SetBallScore()
+        public void SetBallScore(BumperType bumperType)
         {
-            _ballUsecase.SetScore();
+            _ballUsecase.SetScore(bumperType);
         }
 
         public void DealDamageToBoss()

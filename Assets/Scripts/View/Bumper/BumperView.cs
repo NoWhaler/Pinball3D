@@ -1,4 +1,5 @@
-﻿using Model.Enums;
+﻿using System;
+using Model.Enums;
 using Pinball.Presenter;
 using TMPro;
 using UniRx;
@@ -13,6 +14,11 @@ namespace View
         private IBumperPresenter _bumperPresenter;
 
         [SerializeField] private BumperType _bumperType;
+        
+        public BumperType BumperType
+        {
+            get => _bumperType;
+        }
         
         private TMP_Text _bumperPoints;
         private Canvas _canvas;

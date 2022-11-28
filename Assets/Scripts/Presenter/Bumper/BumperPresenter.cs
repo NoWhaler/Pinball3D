@@ -51,5 +51,10 @@ namespace Pinball.Presenter
         {
             _bumperUsecase.SetPoints(bumperType);
         }
+
+        // public void AddPoints(BumperType bumperType)
+        // {
+        //     _bumperUsecase.AddPointsToBall(bumperType);
+        // }
     }
 }
