@@ -13,12 +13,6 @@ namespace View
         private TMP_Text _ballScoreText;
         private Canvas _canvas;
         private Rigidbody _rigidbody;
-        
-        // private BumperType _bumperType;
-        // private BumperView _bumperView;
-        
-        
-        private int _score;
 
         [Inject]
         private IBallPresenter _ballPresenter;
@@ -48,6 +42,30 @@ namespace View
         private void SetScore(int score)
         {
             _ballScoreText.text = score.ToString();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            var bonusWall = other.GetComponent<BonusWallView>();
+            if (bonusWall != null)
+            {
+                switch (bonusWall.BonusWallType)
+                {
+                    case BonusWallType.Addition:
+                        _ballPresenter.SetScoreViaWall(BonusWallType.Addition);
+                        break;
+                    case BonusWallType.Subtraction:
+                        _ballPresenter.SetScoreViaWall(BonusWallType.Subtraction);
+                        break;
+                    case BonusWallType.Division:
+                        _ballPresenter.SetScoreViaWall(BonusWallType.Division);
+                        break;
+                    case BonusWallType.Multiplication:
+                        _ballPresenter.SetScoreViaWall(BonusWallType.Multiplication);
+                        break;
+                }
+                other.gameObject.SetActive(false);
+            }
         }
 
         private void OnCollisionEnter(Collision collision)

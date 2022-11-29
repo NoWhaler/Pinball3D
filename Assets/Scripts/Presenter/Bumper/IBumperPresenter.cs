@@ -12,7 +12,6 @@ namespace Pinball.Presenter
         IReadOnlyReactiveProperty<int> BumperTwenty { get; }
         
         void SetBumperPoints(BumperType bumperType);
-
-        // void AddPoints(BumperType bumperType);
+        
     }
 }

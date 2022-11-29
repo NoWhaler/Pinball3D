@@ -11,6 +11,7 @@ public class TestInstaller : MonoInstaller
         var ballGateway = new BallGateway();
         var bossGateway = new BossGateway();
         var bumperGateway = new BumperGateway();
+        var bonusWallGateway = new BonusWallGateway();
         
         var bumperUsecase = new BumperUsecase(bumperGateway);
         var bumperPresenter = gameObject.AddComponent<BumperPresenter>();
@@ -21,11 +22,10 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBumperPresenter>().FromInstance(bumperPresenter).NonLazy();
 
 
-        var ballUsecase = new BallUsecase(ballGateway, bossGateway, bumperGateway);
+        var ballUsecase = new BallUsecase(ballGateway, bossGateway, bumperGateway, bonusWallGateway);
         var ballPresenter = gameObject.AddComponent<BallPresenter>();
         ballPresenter.Initialize(ballUsecase);
 
-       
         Container.Bind<IBallGateway>().FromInstance(ballGateway).NonLazy();
         Container.Bind<IBallUsecase>().FromInstance(ballUsecase).NonLazy();
         Container.Bind<IBallPresenter>().FromInstance(ballPresenter).NonLazy();
@@ -38,6 +38,14 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBossGateway>().FromInstance(bossGateway).NonLazy();
         Container.Bind<IBossUsecase>().FromInstance(bossUsecase).NonLazy();
         Container.Bind<IBossPresenter>().FromInstance(bossPresenter).NonLazy();
+
+        var bonusWallUsecase = new BonusWallUsecase(bonusWallGateway);
+        var bonusWallPresenter = gameObject.AddComponent<BonusWallPresenter>();
+        bonusWallPresenter.Initialize(bonusWallUsecase);
         
+        Container.Bind<IBonusWallGateway>().FromInstance(bonusWallGateway).NonLazy();
+        Container.Bind<IBonusWallUsecase>().FromInstance(bonusWallUsecase).NonLazy();
+        Container.Bind<IBonusWallPresenter>().FromInstance(bonusWallPresenter).NonLazy();
+
     }
 }

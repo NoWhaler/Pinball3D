@@ -14,17 +14,48 @@ namespace Usecase
         private readonly IBallGateway _ballGateway;
         private readonly IBossGateway _bossGateway;
         private readonly IBumperGateway _bumperGateway;
+        private readonly IBonusWallGateway _bonusWallGateway;
 
-        public BallUsecase(IBallGateway ballGateway, IBossGateway bossGateway, IBumperGateway bumperGateway)
+        public BallUsecase(IBallGateway ballGateway, IBossGateway bossGateway, IBumperGateway bumperGateway, IBonusWallGateway bonusWallGateway)
         {
             _ballGateway = ballGateway;
             _bossGateway = bossGateway;
             _bumperGateway = bumperGateway;
+            _bonusWallGateway = bonusWallGateway;
             _score = new ReactiveProperty<BallModel>(new BallModel());
             InitScore();
         }
 
-        public void SetScore(BumperType bumperType)
+        public void SetScoreViaWall(BonusWallType bonusWallType)
+        {
+            var score = _ballGateway.GetBallValue();
+            
+            switch (bonusWallType)
+            {
+                case BonusWallType.Addition:
+                    score += _bonusWallGateway.GetBonusWallValue(BonusWallType.Addition);
+                    break;
+                case BonusWallType.Subtraction:
+                    score -= _bonusWallGateway.GetBonusWallValue(BonusWallType.Subtraction);
+                    break;
+                case BonusWallType.Division:
+                    score /= _bonusWallGateway.GetBonusWallValue(BonusWallType.Division);
+                    break;
+                case BonusWallType.Multiplication:
+                    score *= _bonusWallGateway.GetBonusWallValue(BonusWallType.Multiplication);
+                    break;
+            }
+            
+            var newValue = score;
+            
+            _ballGateway.SetBallValue(newValue);
+
+            var ballModel = _score.Value;
+            ballModel.Score = newValue;
+            _score.SetValueAndForceNotify(ballModel);
+        }
+        
+        public void SetScoreViaBumper(BumperType bumperType)
         {
             var score = _ballGateway.GetBallValue();
             

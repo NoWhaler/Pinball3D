@@ -9,7 +9,5 @@ namespace Usecase
     {
         IReadOnlyReactiveProperty<Dictionary<BumperType, BumperModel>> Points { get; }
         void SetPoints(BumperType bumperType);
-
-        // void AddPointsToBall(BumperType bumperType);
     }
 }

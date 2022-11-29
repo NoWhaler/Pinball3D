@@ -9,8 +9,6 @@ namespace Pinball.Presenter
 {
     public class BumperPresenter : MonoBehaviour, IBumperPresenter
     {
-        private BumperModel _bumperModel;
-        
         public IReadOnlyReactiveProperty<int> BumperFive => _five;
         private readonly ReactiveProperty<int> _five = new ReactiveProperty<int>();
         
@@ -51,10 +49,5 @@ namespace Pinball.Presenter
         {
             _bumperUsecase.SetPoints(bumperType);
         }
-
-        // public void AddPoints(BumperType bumperType)
-        // {
-        //     _bumperUsecase.AddPointsToBall(bumperType);
-        // }
     }
 }

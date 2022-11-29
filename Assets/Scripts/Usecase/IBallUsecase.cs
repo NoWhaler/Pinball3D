@@ -7,7 +7,9 @@ namespace Usecase
     public interface IBallUsecase
     {
         IReadOnlyReactiveProperty<BallModel> Score { get; }
-        void SetScore(BumperType bumperType);
+        void SetScoreViaBumper(BumperType bumperType);
+
+        void SetScoreViaWall(BonusWallType bonusWallType);
 
         void HitBoss();
     }

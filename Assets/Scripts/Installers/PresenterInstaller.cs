@@ -1,5 +1,3 @@
-using Pinball.Presenter;
-using Presenter;
 using Zenject;
 
 public class PresenterInstaller : MonoInstaller

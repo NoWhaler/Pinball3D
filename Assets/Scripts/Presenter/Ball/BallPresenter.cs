@@ -25,7 +25,12 @@ namespace Pinball.Presenter
 
         public void SetBallScore(BumperType bumperType)
         {
-            _ballUsecase.SetScore(bumperType);
+            _ballUsecase.SetScoreViaBumper(bumperType);
+        }
+
+        public void SetScoreViaWall(BonusWallType bonusWallType)
+        {
+            _ballUsecase.SetScoreViaWall(bonusWallType);
         }
 
         public void DealDamageToBoss()
