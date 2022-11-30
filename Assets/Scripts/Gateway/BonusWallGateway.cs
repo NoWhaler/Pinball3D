@@ -58,10 +58,10 @@ namespace Gateway
         {
             return bonusWallType switch
             {
-                BonusWallType.Addition => _addition.Value,
-                BonusWallType.Subtraction => _subtraction.Value,
-                BonusWallType.Division => _division.Value,
-                BonusWallType.Multiplication => _multiplication.Value,
+                BonusWallType.Addition => 100,
+                BonusWallType.Subtraction => 100,
+                BonusWallType.Division => 2,
+                BonusWallType.Multiplication => 2,
                 _ => 0
             };
         }

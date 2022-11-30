@@ -1,5 +1,4 @@
-﻿using System;
-using Model.Enums;
+﻿using Model.Enums;
 using Presenter;
 using TMPro;
 using UniRx;
@@ -19,7 +18,7 @@ namespace View
         private TMP_Text _valuePoints;
         private Canvas _canvas;
 
-        public BonusWallType BonusWallType { get; }
+        public BonusWallType BonusWallType { get => _bonusWallType; }
         
         private void Awake()
         {
@@ -39,12 +38,13 @@ namespace View
                 _ => _bonusWallPresenter.BonusWallMultiplication
             };
             
-            reactiveProperty.Subscribe((points) => { SetPoints(_value); }).AddTo(this);
+            reactiveProperty.Subscribe((points) => { SetPoints(points); }).AddTo(this);
+            // SetPoints(_value);
         }
         
         private void SetPoints(int points)
         {
-            _value = points;
+            // _value = points;
             _valuePoints.text = _bonusWallType switch
             {
                 BonusWallType.Addition => $"+{points}",
