@@ -3319,8 +3319,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ball: {fileID: 1567376523}
-  _offset: {x: 0, y: 6, z: -6}
-  _smoothTime: 5
+  _offset: {x: 0, y: 7, z: -6}
+  _smoothTime: 0.15
   _rigidbody: {fileID: 1567376524}
 --- !u!1001 &1003203399
 PrefabInstance:
@@ -6489,7 +6489,7 @@ PrefabInstance:
     - target: {fileID: 3096495917211346013, guid: 2967165aa5bd4cd40a29052f4fc3bec8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.65
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3096495917211346013, guid: 2967165aa5bd4cd40a29052f4fc3bec8,
         type: 3}
@@ -6499,7 +6499,7 @@ PrefabInstance:
     - target: {fileID: 3096495917211346013, guid: 2967165aa5bd4cd40a29052f4fc3bec8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.94
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3096495917211346013, guid: 2967165aa5bd4cd40a29052f4fc3bec8,
         type: 3}
