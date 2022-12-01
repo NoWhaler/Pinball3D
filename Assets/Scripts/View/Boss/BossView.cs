@@ -1,4 +1,5 @@
-﻿using Presenter;
+﻿using System;
+using Presenter;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace View
         
         private TMP_Text _bossHealthText;
         private Canvas _canvas;
+
+        public event Action OnBossDeath;
 
         private void Awake()
         {
@@ -29,6 +32,7 @@ namespace View
                 SetHealth(value);
                 if (value <= 0)
                 {
+                    OnBossDeath?.Invoke();
                     gameObject.SetActive(false);
                 }
             }).AddTo(this);

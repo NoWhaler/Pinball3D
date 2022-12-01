@@ -34,9 +34,10 @@ namespace View
             SetScore(0);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _rigidbody.AddForce(new Vector3(0f, 0f, -9.81f), ForceMode.Acceleration);
+            Debug.Log(_rigidbody.velocity.z);
         }
 
         private void SetScore(int score)
