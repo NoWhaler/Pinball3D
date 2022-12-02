@@ -37,7 +37,6 @@ namespace View
         private void FixedUpdate()
         {
             _rigidbody.AddForce(new Vector3(0f, 0f, -9.81f), ForceMode.Acceleration);
-            Debug.Log(_rigidbody.velocity.z);
         }
 
         private void SetScore(int score)
@@ -85,8 +84,15 @@ namespace View
                     case BumperType.Twenty:
                         _ballPresenter.SetBallScore(BumperType.Twenty);
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    case BumperType.MinusFive:
+                        _ballPresenter.SetBallScore(BumperType.MinusFive);
+                        break;
+                    case BumperType.MinusTen:
+                        _ballPresenter.SetBallScore(BumperType.MinusTen);
+                        break;
+                    case BumperType.MinusTwenty:
+                        _ballPresenter.SetBallScore(BumperType.MinusTwenty);
+                        break;
                 }
             }
             

@@ -1,3 +1,4 @@
+using System;
 using Pinball.Presenter;
 using UnityEngine;
 using View;
@@ -26,16 +27,21 @@ public class FlipperView : MonoBehaviour, IFlipperView
         Input.multiTouchEnabled = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         _flipperPresenter.AddTorque();
     }
 
     public void AddSpringToFlipper()
     {
-        if (Input.touchCount <= 0) return;
-        _touch = Input.GetTouch(0);
-        CheckForFlipperType();
+        if (Input.touchCount > 0)
+        {
+            _touch = Input.GetTouch(0);
+            CheckForFlipperType();
+        }
+
+        CheckTypeFlipper();
+        
     }
 
     private void CheckForFlipperType()
@@ -57,20 +63,45 @@ public class FlipperView : MonoBehaviour, IFlipperView
         }
     }
 
+    private void CheckTypeFlipper()
+    {
+        switch (_flipperType)
+        {
+            case FlipperType.LeftFlipper:
+                if (Input.mousePosition.x < Screen.width / 2f)
+                {
+                    AddSpringForceForInput();
+                }
+                break;
+            case FlipperType.RightFlipper:
+                if (Input.mousePosition.x > Screen.width / 2f)
+                {
+                    AddSpringForceForInput();
+                }
+                break;
+        }
+    }
+
+    private void AddSpringForceForInput()
+    {
+        _jointSpring.spring = _springForce;
+        _jointSpring.damper = _springDamper;
+        _jointSpring.targetPosition = Input.GetAxis("Fire1") >= 1 ? _maxLimit : _minLimit;
+        _hingeJoint.spring = _jointSpring;
+    }
+
     private void AddSpringForce()
     {
         _jointSpring.spring = _springForce;
         _jointSpring.damper = _springDamper;
 
-        switch (_touch.phase)
+        _jointSpring.targetPosition = _touch.phase switch
         {
-            case TouchPhase.Began:
-                _jointSpring.targetPosition = _maxLimit;
-                break;
-            case TouchPhase.Ended:
-                _jointSpring.targetPosition = _minLimit;
-                break;
-        }
+            TouchPhase.Began => _maxLimit,
+            TouchPhase.Ended => _minLimit,
+            _ => _jointSpring.targetPosition
+        };
+
         _hingeJoint.spring = _jointSpring;
     }
 }

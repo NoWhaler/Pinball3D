@@ -37,6 +37,9 @@ namespace View
             {
                 BumperType.Five => _bumperPresenter.BumperFive,
                 BumperType.Ten => _bumperPresenter.BumperTen,
+                BumperType.MinusFive => _bumperPresenter.BumperMinusFive,
+                BumperType.MinusTen => _bumperPresenter.BumperMinusTen,
+                BumperType.MinusTwenty => _bumperPresenter.BumperMinusTwenty,
                 _ => _bumperPresenter.BumperTwenty
             };
             

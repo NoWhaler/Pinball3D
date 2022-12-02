@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Model;
 using Model.Enums;
 using UnityEngine;
@@ -17,6 +18,15 @@ namespace Pinball.Presenter
         
         public IReadOnlyReactiveProperty<int> BumperTwenty => _twenty;
         private readonly ReactiveProperty<int> _twenty = new ReactiveProperty<int>();
+        
+        public IReadOnlyReactiveProperty<int> BumperMinusFive => _minusFive;
+        private readonly ReactiveProperty<int> _minusFive = new ReactiveProperty<int>();
+        
+        public IReadOnlyReactiveProperty<int> BumperMinusTen => _minusTen;
+        private readonly ReactiveProperty<int> _minusTen = new ReactiveProperty<int>();
+        
+        public IReadOnlyReactiveProperty<int> BumperMinusTwenty => _minusTwenty;
+        private readonly ReactiveProperty<int> _minusTwenty = new ReactiveProperty<int>();
 
         private IBumperUsecase _bumperUsecase;
         
@@ -40,6 +50,15 @@ namespace Pinball.Presenter
                         break;
                     case BumperType.Twenty:
                         _twenty.Value = value.Points;
+                        break;
+                    case BumperType.MinusFive:
+                        _minusFive.Value = value.Points;
+                        break;
+                    case BumperType.MinusTen:
+                        _minusTen.Value = value.Points;
+                        break;
+                    case BumperType.MinusTwenty:
+                        _minusTwenty.Value = value.Points;
                         break;
                 }
             }

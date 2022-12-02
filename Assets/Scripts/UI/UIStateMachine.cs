@@ -62,7 +62,7 @@ namespace UI
 
         private void OnScreenTouch()
         {
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
             {
                 Time.timeScale = 1;
                 IsScreenTouched = true;
