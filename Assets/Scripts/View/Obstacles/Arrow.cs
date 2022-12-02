@@ -6,13 +6,13 @@ namespace View
     {
         [SerializeField] private float _force;
         
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
-            var ball = other.GetComponent<BallView>();
+            var ball = other.collider.GetComponent<BallView>();
 
             if (ball != null)
             {
-                PushBall(other.attachedRigidbody);
+                PushBall(other.rigidbody);
             }
         }
 

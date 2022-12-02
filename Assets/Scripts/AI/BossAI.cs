@@ -26,14 +26,14 @@ namespace AI
             }
         }
 
-        private bool IsReadyCheck()
+        private void IsReadyCheck()
         {
             if (transform.position.z - _playerPosition.transform.position.z <= 13f)
             {
-                return IsReady = true;
+                IsReady = true;
             }
 
-            return IsReady = false;
+            IsReady = false;
         }
     }
 }
