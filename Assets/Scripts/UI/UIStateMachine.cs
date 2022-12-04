@@ -12,34 +12,23 @@ namespace UI
         [SerializeField] private Canvas _settingsCanvas;
         [SerializeField] private Canvas _gamePlayCanvas;
         [SerializeField] private Canvas _winCanvas;
-
+        [SerializeField] private ParticleSystem _particleSystem;
+        
         private BossView _boss;
         
         public bool IsCancelButtonPressed { get; set; }
         public bool IsSettingsButtonPressed { get; set; }
-        public bool IsScreenTouched { get; set; }
+        public bool IsLevelStart { get; set; }
         public bool IsLevelEnded { get; set; }
 
-        public Canvas MenuCanvas
-        {
-            get => _menuCanvas;
-        }
+        public Canvas MenuCanvas => _menuCanvas;
 
-        public Canvas SettingsCanvas
-        {
-            get => _settingsCanvas;
-        }
+        public Canvas SettingsCanvas => _settingsCanvas;
 
-        public Canvas GamePlayCanvas
-        {
-            get => _gamePlayCanvas;
-        }
+        public Canvas GamePlayCanvas => _gamePlayCanvas;
 
-        public Canvas WinCanvas
-        {
-            get => _winCanvas;
-        }
-        
+        public Canvas WinCanvas => _winCanvas;
+
         public UIBaseState CurrentState { get; set; }
         private UIStateFactory StateFactory { get; set; }
 
@@ -57,21 +46,22 @@ namespace UI
         private void Update()
         {
             CurrentState.UpdateStates();
-            OnScreenTouch();
+            OnLevelStart();
         }
 
-        private void OnScreenTouch()
+        private void OnLevelStart()
         {
             if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
             {
                 Time.timeScale = 1;
-                IsScreenTouched = true;
+                IsLevelStart = true;
             }
         }
         
         private void OnLevelEnd()
         {
             IsLevelEnded = true;
+            _particleSystem.Play();
         }
 
         public void OnCancelButtonClick()

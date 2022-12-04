@@ -22,10 +22,5 @@ namespace UI.States
         {
             StateContext.WinCanvas.gameObject.SetActive(false);
         }
-
-        private void CheckStates()
-        {
-            
-        }
     }
 }

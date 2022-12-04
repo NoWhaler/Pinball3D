@@ -10,7 +10,7 @@ namespace AI
         [SerializeField] private Transform _playerPosition;
         private bool IsReady { get; set; }
 
-        private void Update()
+        private void FixedUpdate()
         {
             IsReadyCheck();
             if (!IsReady) return;
@@ -28,12 +28,7 @@ namespace AI
 
         private void IsReadyCheck()
         {
-            if (transform.position.z - _playerPosition.transform.position.z <= 13f)
-            {
-                IsReady = true;
-            }
-
-            IsReady = false;
+            IsReady = transform.position.z - _playerPosition.transform.position.z <= 13f;
         }
     }
 }

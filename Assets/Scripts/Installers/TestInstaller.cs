@@ -31,7 +31,7 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBallPresenter>().FromInstance(ballPresenter).NonLazy();
 
 
-        var bossUsecase = new BossUsecase(bossGateway, ballGateway);
+        var bossUsecase = new BossUsecase(bossGateway);
         var bossPresenter = gameObject.AddComponent<BossPresenter>();
         bossPresenter.Initialize(bossUsecase);
         

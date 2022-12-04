@@ -24,10 +24,10 @@
 
         private void CheckStates()
         {
-            if (StateContext.IsScreenTouched)
+            if (StateContext.IsLevelStart)
             {
                 SwitchState(StateFactory.Gameplay());
-                StateContext.IsScreenTouched = false;
+                StateContext.IsLevelStart = false;
             }
         }
     }
