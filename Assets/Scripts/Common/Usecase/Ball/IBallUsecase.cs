@@ -15,6 +15,8 @@ namespace Usecase
 
         void HitBoss();
 
+        void SetValueViaDamageBall();
+
         void SetComboToBaseValue();
 
         void SetComboValue();

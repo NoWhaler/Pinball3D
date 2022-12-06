@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using Pinball.Presenter;
 using UnityEngine;
 using View;
@@ -11,6 +12,8 @@ public class FlipperView : MonoBehaviour, IFlipperView
     [SerializeField] private float _springForce;
     [SerializeField] private float _springDamper;
     [SerializeField] private HingeJoint _hingeJoint;
+
+    [SerializeField] private AudioClip _audioClip;
     
     private JointSpring _jointSpring;
 
@@ -24,22 +27,24 @@ public class FlipperView : MonoBehaviour, IFlipperView
         _hingeJoint = GetComponent<HingeJoint>();
         _jointSpring = new JointSpring();
         _flipperPresenter = new FlipperPresenter(this);
-        Input.multiTouchEnabled = true;
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(Input.touchCount);
         _flipperPresenter.AddTorque();
     }
 
     public void AddSpringToFlipper()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
         {
             _touch = Input.GetTouch(0);
+            Debug.Log("Play Sound");
+            AudioManager.Instance.PlayAudioClip(_audioClip);
+            
             CheckForFlipperType();
         }
-
         CheckTypeFlipper();
         
     }
@@ -97,7 +102,7 @@ public class FlipperView : MonoBehaviour, IFlipperView
 
         _jointSpring.targetPosition = _touch.phase switch
         {
-            TouchPhase.Began => _maxLimit,
+            TouchPhase.Stationary => _maxLimit,
             TouchPhase.Ended => _minLimit,
             _ => _jointSpring.targetPosition
         };

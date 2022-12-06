@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
 namespace UI.States
 {
@@ -12,6 +13,7 @@ namespace UI.States
         {
             StateContext.GamePlayCanvas.gameObject.SetActive(true);
             Time.timeScale = 1;
+            AudioManager.Instance.PlayMusic(StateContext.AudioClip);
         }
 
         protected override void UpdateState()
@@ -23,6 +25,7 @@ namespace UI.States
         {
             StateContext.GamePlayCanvas.gameObject.SetActive(false);
             Time.timeScale = 0;
+            AudioManager.Instance.MusicSource.Stop();
         }
         
         private void CheckStates()

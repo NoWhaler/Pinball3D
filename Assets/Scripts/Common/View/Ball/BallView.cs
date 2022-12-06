@@ -1,5 +1,10 @@
 ﻿using System;
+using CollisionDetection;
+using Common.View.DamageBall;
+using Managers;
+using Model;
 using Model.Enums;
+using MoreMountains.NiceVibrations;
 using Pinball.Presenter;
 using TMPro;
 using UnityEngine;
@@ -15,6 +20,7 @@ namespace View
         private Rigidbody _rigidbody;
 
         [SerializeField] private ComboView _comboView;
+        [SerializeField] private AudioClip _audioClip;
 
         [Inject]
         private IBallPresenter _ballPresenter;
@@ -67,6 +73,20 @@ namespace View
             if (bossView != null)
             {
                 _ballPresenter.DealDamageToBoss();
+                bool test = MMVibrationManager.HapticsSupported();
+            }
+
+            var trampoline = collision.collider.GetComponent<Trampoline>();
+            if (trampoline != null)
+            {
+                AudioManager.Instance.PlayAudioClip(_audioClip);
+            }
+
+            var damageBall = collision.collider.GetComponent<DamageBallView>();
+            if (damageBall != null)
+            {
+                _ballPresenter.SetScoreViaDamageBall();
+                damageBall.gameObject.SetActive(false);
             }
         }
 

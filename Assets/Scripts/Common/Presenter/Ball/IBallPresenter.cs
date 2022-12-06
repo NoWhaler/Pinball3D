@@ -1,6 +1,5 @@
 ﻿using Model.Enums;
 using UniRx;
-using Usecase;
 
 namespace Pinball.Presenter
 {
@@ -15,6 +14,8 @@ namespace Pinball.Presenter
         void SetBallScore(BumperType bumperType);
 
         void SetComboValue();
+        
+        void SetScoreViaDamageBall();
 
         void SetComboToBaseValue();
 

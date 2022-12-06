@@ -1,4 +1,5 @@
-﻿using Gateway;
+﻿using Common.Gateway.DamageBall;
+using Gateway;
 using Model;
 using Model.Enums;
 using UniRx;
@@ -17,13 +18,17 @@ namespace Usecase
         private readonly IBossGateway _bossGateway;
         private readonly IBumperGateway _bumperGateway;
         private readonly IBonusWallGateway _bonusWallGateway;
+        private readonly IDamageBallGateway _damageBallGateway;
 
-        public BallUsecase(IBallGateway ballGateway, IBossGateway bossGateway, IBumperGateway bumperGateway, IBonusWallGateway bonusWallGateway)
+        public BallUsecase(IBallGateway ballGateway, IBossGateway bossGateway,
+            IBumperGateway bumperGateway, IBonusWallGateway bonusWallGateway,
+            IDamageBallGateway damageBallGateway)
         {
             _ballGateway = ballGateway;
             _bossGateway = bossGateway;
             _bumperGateway = bumperGateway;
             _bonusWallGateway = bonusWallGateway;
+            _damageBallGateway = damageBallGateway;
             _score = new ReactiveProperty<BallModel>(new BallModel());
             _combo = new ReactiveProperty<BallModel>(new BallModel());
             InitScore();
@@ -76,6 +81,17 @@ namespace Usecase
             var ballModel = _combo.Value;
             ballModel.Combo = comboValue;
             _combo.SetValueAndForceNotify(ballModel);
+        }
+
+        public void SetValueViaDamageBall()
+        {
+            var ballValue = _ballGateway.GetBallValue();
+            var newValue = ballValue - _damageBallGateway.GetDamageValue();
+            _ballGateway.SetBallValue(newValue);
+            
+            var ballModel = _score.Value;
+            ballModel.Score = newValue;
+            _score.SetValueAndForceNotify(ballModel);
         }
         
         public void SetScoreViaBumper(BumperType bumperType)

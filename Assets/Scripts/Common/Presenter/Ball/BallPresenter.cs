@@ -56,6 +56,11 @@ namespace Pinball.Presenter
         {
             _ballUsecase.SetComboToBaseValue();
         }
+
+        public void SetScoreViaDamageBall()
+        {
+            _ballUsecase.SetValueViaDamageBall();
+        }
         
         private void UpdateScore(BallModel ballModel)
         {

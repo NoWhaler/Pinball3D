@@ -8,7 +8,7 @@ namespace Usecase
     public class BossUsecase: IBossUsecase
     {
         public IReadOnlyReactiveProperty<BossModel> Health => _health;
-        private ReactiveProperty<BossModel> _health;
+        private ReactiveProperty<BossModel> _health = new ReactiveProperty<BossModel>();
 
         private readonly IBossGateway _bossGateway;
 

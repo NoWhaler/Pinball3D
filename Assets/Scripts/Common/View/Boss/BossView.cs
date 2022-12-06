@@ -1,4 +1,6 @@
 ﻿using System;
+using Model;
+using ObjectPooling;
 using Presenter;
 using TMPro;
 using UniRx;
@@ -11,11 +13,16 @@ namespace View
     {
         [Inject]
         private IBossPresenter _bossPresenter;
-
+        
         [SerializeField] private int _value;
+        [SerializeField] private DamageBallPool _damageBallPool;
+        [SerializeField] private Transform _spawnPosition;
         
         private TMP_Text _bossHealthText;
         private Canvas _canvas;
+
+        private const float SpawnDelay = 10f;
+        private float _timer;
 
         public event Action OnBossDeath;
 
@@ -23,10 +30,13 @@ namespace View
         {
             _canvas = GetComponentInChildren<Canvas>();
             _bossHealthText = _canvas.GetComponentInChildren<TMP_Text>();
+            _damageBallPool = FindObjectOfType<DamageBallPool>();
         }
 
         private void Start()
         {
+            SpawnDamageBall(_spawnPosition);
+            
             _bossPresenter.SetHealthPoints(_value);
             var reactiveProperty = _bossPresenter.BossHealth;
             reactiveProperty.Subscribe((value) =>
@@ -38,15 +48,32 @@ namespace View
                     gameObject.SetActive(false);
                 }
             }).AddTo(this);
-            
-            
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            Debug.Log(_bossPresenter.BossHealth);
+            SpawnOnTime();
         }
 
+        private void SpawnOnTime()
+        {
+            _timer += Time.fixedDeltaTime;
+            if (!(_timer >= SpawnDelay)) return;
+            SpawnDamageBall(_spawnPosition);
+            _timer = 0;
+        }
+        
+        private void SpawnDamageBall(Transform spawnPosition)
+        {
+            var objectPool = _damageBallPool.Get();
+
+            if (objectPool == null) return;
+            objectPool.transform.position = spawnPosition.position;
+            objectPool.transform.rotation = spawnPosition.rotation;
+            objectPool.gameObject.SetActive(true);
+        }
+        
+        
         private void OnCollisionEnter(Collision collision)
         {
             var ballView = collision.collider.GetComponent<BallView>();

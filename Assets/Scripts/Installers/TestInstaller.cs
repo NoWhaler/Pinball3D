@@ -1,3 +1,5 @@
+using Common.Gateway.DamageBall;
+using DefaultNamespace;
 using Gateway;
 using Pinball.Presenter;
 using Presenter;
@@ -12,6 +14,7 @@ public class TestInstaller : MonoInstaller
         var bossGateway = new BossGateway();
         var bumperGateway = new BumperGateway();
         var bonusWallGateway = new BonusWallGateway();
+        var damageBallgateway = new DamageBallGateway();
         
         var bumperUsecase = new BumperUsecase(bumperGateway);
         var bumperPresenter = gameObject.AddComponent<BumperPresenter>();
@@ -22,7 +25,7 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBumperPresenter>().FromInstance(bumperPresenter).NonLazy();
 
 
-        var ballUsecase = new BallUsecase(ballGateway, bossGateway, bumperGateway, bonusWallGateway);
+        var ballUsecase = new BallUsecase(ballGateway, bossGateway, bumperGateway, bonusWallGateway, damageBallgateway);
         var ballPresenter = gameObject.AddComponent<BallPresenter>();
         ballPresenter.Initialize(ballUsecase);
 
@@ -46,6 +49,14 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IBonusWallGateway>().FromInstance(bonusWallGateway).NonLazy();
         Container.Bind<IBonusWallUsecase>().FromInstance(bonusWallUsecase).NonLazy();
         Container.Bind<IBonusWallPresenter>().FromInstance(bonusWallPresenter).NonLazy();
+
+        var damageBallUsecase = new DamageBallUsecase(damageBallgateway);
+        var damageBallPresenter = gameObject.AddComponent<DamageBallPresenter>();
+        damageBallPresenter.Initialize(damageBallUsecase);
+        
+        Container.Bind<IDamageBallGateway>().FromInstance(damageBallgateway).NonLazy();
+        Container.Bind<IDamageBallUsecase>().FromInstance(damageBallUsecase).NonLazy();
+        Container.Bind<IDamageBallPresenter>().FromInstance(damageBallPresenter).NonLazy();
 
     }
 }

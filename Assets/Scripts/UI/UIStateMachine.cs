@@ -13,6 +13,8 @@ namespace UI
         [SerializeField] private Canvas _gamePlayCanvas;
         [SerializeField] private Canvas _winCanvas;
         [SerializeField] private ParticleSystem _particleSystem;
+
+        [SerializeField] private AudioClip _audioClip;
         
         private BossView _boss;
         
@@ -20,6 +22,7 @@ namespace UI
         public bool IsSettingsButtonPressed { get; set; }
         public bool IsLevelStart { get; set; }
         public bool IsLevelEnded { get; set; }
+        public AudioClip AudioClip { get => _audioClip; set => _audioClip = value; }
 
         public Canvas MenuCanvas => _menuCanvas;
 
