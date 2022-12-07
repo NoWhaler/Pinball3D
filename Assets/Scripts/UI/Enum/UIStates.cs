@@ -6,6 +6,6 @@
         Menu,
         Win,
         Settings,
-        TapToPlay
+        ChooseBonus
     }
 }

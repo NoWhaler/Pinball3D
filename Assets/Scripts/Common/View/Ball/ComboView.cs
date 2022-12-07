@@ -1,4 +1,5 @@
 ﻿using System;
+using Interfaces;
 using Pinball.Presenter;
 using TMPro;
 using UniRx;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace View
 {
-    public class ComboView : MonoBehaviour
+    public class ComboView : MonoBehaviour, ISetable
     {
         private TMP_Text _comboValueText;
 
@@ -30,7 +31,7 @@ namespace View
             var reactiveProperty = _ballPresenter.BallCombo;
             
             reactiveProperty.Subscribe((value) => {
-                SetComboValue(value);
+                SetValue(value);
             }).AddTo(this);
         }
 
@@ -54,7 +55,7 @@ namespace View
             Timer = 0;
         }
 
-        private void SetComboValue(int value)
+        public void SetValue(int value)
         {
             _comboValueText.text = value.ToString();
         }

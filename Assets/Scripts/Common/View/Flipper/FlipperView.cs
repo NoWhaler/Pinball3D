@@ -1,5 +1,3 @@
-using System;
-using Managers;
 using Pinball.Presenter;
 using UnityEngine;
 using View;
@@ -21,6 +19,12 @@ public class FlipperView : MonoBehaviour, IFlipperView
     private Touch _touch;
 
     [SerializeField] private FlipperType _flipperType;
+    
+    public float SpringForce
+    {
+        get => _springForce;
+        set => _springForce = value;
+    }
 
     private void Start()
     {
@@ -31,7 +35,6 @@ public class FlipperView : MonoBehaviour, IFlipperView
 
     private void FixedUpdate()
     {
-        Debug.Log(Input.touchCount);
         _flipperPresenter.AddTorque();
     }
 
@@ -40,8 +43,8 @@ public class FlipperView : MonoBehaviour, IFlipperView
         if (Input.touchCount == 1)
         {
             _touch = Input.GetTouch(0);
-            Debug.Log("Play Sound");
-            AudioManager.Instance.PlayAudioClip(_audioClip);
+            // Debug.Log("Play Sound");
+            // AudioManager.Instance.PlayAudioClip(_audioClip);
             
             CheckForFlipperType();
         }

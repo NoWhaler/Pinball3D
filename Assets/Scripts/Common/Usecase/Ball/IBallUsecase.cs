@@ -9,16 +9,26 @@ namespace Usecase
         IReadOnlyReactiveProperty<BallModel> Score { get; }
         
         IReadOnlyReactiveProperty<BallModel> Combo { get; }
-        void SetScoreViaBumper(BumperType bumperType);
+        
+        IReadOnlyReactiveProperty<BallModel> Strength { get; }
+        void SetScoreViaBumper(BumperType bumperType, int value);
 
         void SetScoreViaWall(BonusWallType bonusWallType);
 
-        void HitBoss();
-
+        void SetValueViaGate();
+        
         void SetValueViaDamageBall();
+
+        void HitBoss();
 
         void SetComboToBaseValue();
 
         void SetComboValue();
+
+        void SetStrength(float value);
+
+        void SetValue(int value);
+
+        void SetValueViaBonusCost(int cost);
     }
 }

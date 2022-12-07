@@ -1,5 +1,6 @@
 ﻿using System;
-using Model;
+using AI;
+using Interfaces;
 using ObjectPooling;
 using Presenter;
 using TMPro;
@@ -9,7 +10,7 @@ using Zenject;
 
 namespace View
 {
-    public class BossView : MonoBehaviour, IBossView
+    public class BossView : MonoBehaviour, IBossView, ISetable
     {
         [Inject]
         private IBossPresenter _bossPresenter;
@@ -17,6 +18,8 @@ namespace View
         [SerializeField] private int _value;
         [SerializeField] private DamageBallPool _damageBallPool;
         [SerializeField] private Transform _spawnPosition;
+
+        private BossAI _boss;
         
         private TMP_Text _bossHealthText;
         private Canvas _canvas;
@@ -31,17 +34,16 @@ namespace View
             _canvas = GetComponentInChildren<Canvas>();
             _bossHealthText = _canvas.GetComponentInChildren<TMP_Text>();
             _damageBallPool = FindObjectOfType<DamageBallPool>();
+            _boss = GetComponent<BossAI>();
         }
 
         private void Start()
         {
-            SpawnDamageBall(_spawnPosition);
-            
             _bossPresenter.SetHealthPoints(_value);
             var reactiveProperty = _bossPresenter.BossHealth;
             reactiveProperty.Subscribe((value) =>
             {
-                SetHealth(value);
+                SetValue(value);
                 if (value <= 0)
                 {
                     OnBossDeath?.Invoke();
@@ -57,10 +59,13 @@ namespace View
 
         private void SpawnOnTime()
         {
-            _timer += Time.fixedDeltaTime;
-            if (!(_timer >= SpawnDelay)) return;
-            SpawnDamageBall(_spawnPosition);
-            _timer = 0;
+            if (_boss.IsReady)
+            {
+                _timer += Time.fixedDeltaTime;
+                if (!(_timer >= SpawnDelay)) return;
+                SpawnDamageBall(_spawnPosition);
+                _timer = 0;
+            }
         }
         
         private void SpawnDamageBall(Transform spawnPosition)
@@ -83,7 +88,7 @@ namespace View
             }
         }
 
-        private void SetHealth(int health)
+        public void SetValue(int health)
         {
             _bossHealthText.text = health.ToString();
         }

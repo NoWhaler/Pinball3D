@@ -8,7 +8,7 @@ namespace AI
         private int _currentWaypointIndex;
         [SerializeField] private float _movespeed;
         [SerializeField] private Transform _playerPosition;
-        private bool IsReady { get; set; }
+        public bool IsReady { get; set; }
 
         private void FixedUpdate()
         {

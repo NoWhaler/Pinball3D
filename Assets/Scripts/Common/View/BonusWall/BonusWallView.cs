@@ -1,4 +1,5 @@
-﻿using Model.Enums;
+﻿using Interfaces;
+using Model.Enums;
 using Presenter;
 using TMPro;
 using UniRx;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace View
 {
-    public class BonusWallView : MonoBehaviour
+    public class BonusWallView : MonoBehaviour, ISetable
     {
         [SerializeField] private BonusWallType _bonusWallType;
         [SerializeField] private int _value;
@@ -38,13 +39,11 @@ namespace View
                 _ => _bonusWallPresenter.BonusWallMultiplication
             };
             
-            reactiveProperty.Subscribe((points) => { SetPoints(points); }).AddTo(this);
-            // SetPoints(_value);
+            reactiveProperty.Subscribe((points) => { SetValue(points); }).AddTo(this);
         }
         
-        private void SetPoints(int points)
+        public void SetValue(int points)
         {
-            // _value = points;
             _valuePoints.text = _bonusWallType switch
             {
                 BonusWallType.Addition => $"+{points}",

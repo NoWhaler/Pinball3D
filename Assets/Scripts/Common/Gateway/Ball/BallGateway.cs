@@ -30,5 +30,15 @@ namespace Gateway
         {
             return _ballModel.Score;
         }
+
+        public void SetStrengthValue(float strength)
+        {
+            _ballModel.DamageStrength = strength;
+        }
+
+        public float GetBallStrength()
+        {
+            return _ballModel.DamageStrength;
+        }
     }
 }

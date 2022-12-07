@@ -39,6 +39,11 @@ namespace UI.States
             {
                 SwitchState(StateFactory.Win());
             }
+
+            if (StateContext.IsChoosingBonus)
+            {
+                SwitchState(StateFactory.ChooseBonus());
+            }
         }
     }
 }

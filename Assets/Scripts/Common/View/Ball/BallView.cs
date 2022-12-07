@@ -1,8 +1,9 @@
 ﻿using System;
 using CollisionDetection;
 using Common.View.DamageBall;
+using Common.View.Gate;
+using Interfaces;
 using Managers;
-using Model;
 using Model.Enums;
 using MoreMountains.NiceVibrations;
 using Pinball.Presenter;
@@ -13,17 +14,30 @@ using UniRx;
 
 namespace View
 {
-    public class BallView : MonoBehaviour, IBallView
+    public class BallView : MonoBehaviour, IBallView, ISetable
     {
         private TMP_Text _ballScoreText;
         private Canvas _canvas;
         private Rigidbody _rigidbody;
+
+        [SerializeField] private int _score;
+        [SerializeField] private float _strength;
+        
+
+        public float Strength
+        {
+            get => _strength;
+            set => _strength = value;
+        }
 
         [SerializeField] private ComboView _comboView;
         [SerializeField] private AudioClip _audioClip;
 
         [Inject]
         private IBallPresenter _ballPresenter;
+
+        public float Gravity { get; set; } = -9.81f;
+        public int Score { get => _score; set => _score = value; }
 
         private void Awake()
         {
@@ -34,22 +48,28 @@ namespace View
 
         private void Start()
         {
+            _ballPresenter.SetValue(_score);
             var reactiveProperty = _ballPresenter.BallScore;
+            reactiveProperty.Subscribe(SetValue).AddTo(this);
             
-            reactiveProperty.Subscribe((value) => {
-                SetScore(value);
-            }).AddTo(this);
-            SetScore(0);
+            _ballPresenter.SetStrengthValue(Strength);
+            var reactivePropertyStrength = _ballPresenter.BallStrength;
+            reactivePropertyStrength.Subscribe(UpdateStrengthValue).AddTo(this);
+        }
+
+        private void Update()
+        {
+            _ballPresenter.SetStrengthValue(Strength);
+        }
+
+        private void UpdateStrengthValue(float value)
+        {
+            _strength = value;
         }
 
         private void FixedUpdate()
         {
-            _rigidbody.AddForce(new Vector3(0f, 0f, -9.81f), ForceMode.Acceleration);
-        }
-
-        private void SetScore(int score)
-        {
-            _ballScoreText.text = score.ToString();
+            _rigidbody.AddForce(new Vector3(0f, 0f, Gravity), ForceMode.Acceleration);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -60,7 +80,7 @@ namespace View
             CheckBonusWallType(bonusWall);
             other.gameObject.SetActive(false);
         }
-
+        
         private void OnCollisionEnter(Collision collision)
         {
             var bumperView = collision.collider.GetComponent<BumperView>();
@@ -73,7 +93,7 @@ namespace View
             if (bossView != null)
             {
                 _ballPresenter.DealDamageToBoss();
-                bool test = MMVibrationManager.HapticsSupported();
+                // bool test = MMVibrationManager.HapticsSupported();
             }
 
             var trampoline = collision.collider.GetComponent<Trampoline>();
@@ -88,6 +108,12 @@ namespace View
                 _ballPresenter.SetScoreViaDamageBall();
                 damageBall.gameObject.SetActive(false);
             }
+
+            var gate = collision.collider.GetComponent<GateView>();
+            if (gate != null)
+            {
+                _ballPresenter.SetValueViaGate();
+            }
         }
 
         private void CheckBumperType(BumperView bumperView)
@@ -95,28 +121,28 @@ namespace View
             switch (bumperView.BumperType)
             {
                 case BumperType.Five:
-                    _ballPresenter.SetBallScore(BumperType.Five);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.Five, _score);
                     _comboView.IsGettingCombo = true;
                     _comboView.ComboTimer();
                     break;
                 case BumperType.Ten:
-                    _ballPresenter.SetBallScore(BumperType.Ten);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.Ten, _score);
                     _comboView.IsGettingCombo = true;
                     _comboView.ComboTimer();
                     break;
                 case BumperType.Twenty:
-                    _ballPresenter.SetBallScore(BumperType.Twenty);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.Twenty, _score);
                     _comboView.IsGettingCombo = true;
                     _comboView.ComboTimer();
                     break;
                 case BumperType.MinusFive:
-                    _ballPresenter.SetBallScore(BumperType.MinusFive);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.MinusFive, _score);
                     break;
                 case BumperType.MinusTen:
-                    _ballPresenter.SetBallScore(BumperType.MinusTen);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.MinusTen, _score);
                     break;
                 case BumperType.MinusTwenty:
-                    _ballPresenter.SetBallScore(BumperType.MinusTwenty);
+                    _ballPresenter.SetBallScoreViaBumper(BumperType.MinusTwenty, _score);
                     break;
             }
         }
@@ -138,6 +164,16 @@ namespace View
                     _ballPresenter.SetScoreViaWall(BonusWallType.Multiplication);
                     break;
             }
+        }
+        
+        public void SetValue(int score)
+        {
+            _ballScoreText.text = score.ToString();
+        }
+
+        public void SetValueViaCost(int cost)
+        {
+            _ballPresenter.SetValueViaBonusCost(cost);
         }
     }
 }

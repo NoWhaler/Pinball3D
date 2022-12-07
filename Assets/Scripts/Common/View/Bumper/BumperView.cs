@@ -1,4 +1,5 @@
 ﻿using System;
+using Interfaces;
 using Model.Enums;
 using Pinball.Presenter;
 using TMPro;
@@ -8,7 +9,7 @@ using Zenject;
 
 namespace View
 {
-    public class BumperView : MonoBehaviour, IBumperView
+    public class BumperView : MonoBehaviour, IBumperView, ISetable
     {
         [Inject]
         private IBumperPresenter _bumperPresenter;
@@ -43,10 +44,10 @@ namespace View
                 _ => _bumperPresenter.BumperTwenty
             };
             
-            reactiveProperty.Subscribe((points) => { SetPoints(points); }).AddTo(this);
+            reactiveProperty.Subscribe((points) => { SetValue(points); }).AddTo(this);
         }
         
-        private void SetPoints(int points)
+        public void SetValue(int points)
         {
             _bumperPoints.text = points.ToString();
         }

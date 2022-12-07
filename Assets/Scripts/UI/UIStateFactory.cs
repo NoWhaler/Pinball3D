@@ -18,6 +18,7 @@ namespace UI
             _states[UIStates.Gameplay] = new GameplayState(_context, this);
             _states[UIStates.Settings] = new SettingsState(_context, this);
             _states[UIStates.Win] = new WinState(_context, this);
+            _states[UIStates.ChooseBonus] = new ChooseBonusState(_context, this);
         }
 
 
@@ -39,6 +40,11 @@ namespace UI
         public UIBaseState Win()
         {
             return _states[UIStates.Win];
+        }
+
+        public UIBaseState ChooseBonus()
+        {
+            return _states[UIStates.ChooseBonus];
         }
     }
 }

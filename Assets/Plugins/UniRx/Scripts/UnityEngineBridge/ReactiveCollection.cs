@@ -148,11 +148,6 @@ namespace UniRx
         [NonSerialized]
         bool isDisposed = false;
 
-        public ReactiveCollection()
-        {
-
-        }
-
         public ReactiveCollection(IEnumerable<T> collection)
         {
             if (collection == null) throw new ArgumentNullException("collection");
