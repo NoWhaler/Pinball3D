@@ -13,7 +13,10 @@ namespace UI.States
         {
             StateContext.GamePlayCanvas.gameObject.SetActive(true);
             Time.timeScale = 1;
-            AudioManager.Instance.PlayMusic(StateContext.AudioClip);
+            if (UIStateMachine.IsSoundToggle)
+            {
+                AudioManager.Instance.PlayMusic(StateContext.AudioClip);
+            }
         }
 
         protected override void UpdateState()

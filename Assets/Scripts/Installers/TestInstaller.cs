@@ -69,7 +69,7 @@ public class TestInstaller : MonoInstaller
         Container.Bind<IDamageBallPresenter>().FromInstance(damageBallPresenter).AsTransient().NonLazy();
 
         
-        var gateUsecase = new GateUsecase(gateGateway);
+        var gateUsecase = new GateUsecase(gateGateway, ballGateway);
         var gatePresenter = gameObject.AddComponent<GatePresenter>();
         gatePresenter.Initialize(gateUsecase);
 

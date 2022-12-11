@@ -43,13 +43,9 @@ public class FlipperView : MonoBehaviour, IFlipperView
         if (Input.touchCount == 1)
         {
             _touch = Input.GetTouch(0);
-            // Debug.Log("Play Sound");
-            // AudioManager.Instance.PlayAudioClip(_audioClip);
-            
             CheckForFlipperType();
         }
         CheckTypeFlipper();
-        
     }
 
     private void CheckForFlipperType()

@@ -1,6 +1,4 @@
-﻿using System;
-using Common.View.Bonus;
-using Unity.VisualScripting;
+﻿using Common.View.Bonus;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using View;
@@ -9,7 +7,6 @@ namespace UI
 {
     public class UIStateMachine : MonoBehaviour
     {
-
         [SerializeField] private Canvas _menuCanvas;
         [SerializeField] private Canvas _settingsCanvas;
         [SerializeField] private Canvas _gamePlayCanvas;
@@ -28,6 +25,10 @@ namespace UI
         public bool IsLevelStart { get; set; }
         public bool IsLevelEnded { get; set; }
         public bool IsChoosingBonus { get; set; }
+        
+        public static bool IsSoundToggle { get; set; }
+        
+        public static bool IsVibrationToggle { get; set; }
         public AudioClip AudioClip { get => _audioClip; set => _audioClip = value; }
 
         public Canvas MenuCanvas => _menuCanvas;
@@ -71,7 +72,7 @@ namespace UI
 
         private void OnLevelStart()
         {
-            if (Input.touchCount > 0 || Input.GetKey(KeyCode.Space))
+            if (!IsLevelStart && (Input.touchCount > 0 || Input.GetKey(KeyCode.Space)))
             {
                 Time.timeScale = 1;
                 IsLevelStart = true;
@@ -86,7 +87,6 @@ namespace UI
         private void OnChoosingBonus()
         {
             IsChoosingBonus = true;
-            
         }
         
         private void OnLevelEnd()
@@ -108,6 +108,24 @@ namespace UI
         public void OnNextLevelButtonClick(int sceneID)
         {
             SceneManager.LoadScene(sceneID);
+        }
+
+        public void ToggleSound()
+        {
+            IsSoundToggle = IsSoundToggle switch
+            {
+                true => false,
+                false => true
+            };
+        }
+
+        public void ToggleVibration()
+        {
+            IsVibrationToggle = IsVibrationToggle switch
+            {
+                true => false,
+                false => true
+            };
         }
         
         public void RestartLevel()

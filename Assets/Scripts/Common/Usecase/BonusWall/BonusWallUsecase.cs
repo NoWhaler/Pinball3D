@@ -25,14 +25,12 @@ namespace Usecase
             InitPoints(BonusWallType.Division);
         }
         
-        public void SetValue(BonusWallType bonusWallType)
+        public void SetValue(BonusWallType bonusWallType, int value)
         {
-            var points = _bonusWallGateway.GetBonusWallValue(bonusWallType);
-
-            _bonusWallGateway.SetBonusWallValue(bonusWallType, points);
-
+            _bonusWallGateway.SetBonusWallValue(bonusWallType, value);
             var dict = _value.Value;
-            dict[bonusWallType].Value = points;
+            value = _bonusWallGateway.GetBonusWallValue(bonusWallType);
+            dict[bonusWallType].Value = value;
             _value.SetValueAndForceNotify(dict);
         }
         

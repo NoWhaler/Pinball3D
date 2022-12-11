@@ -6,7 +6,7 @@ namespace UI
     public class CoinsHolder : MonoBehaviour
     {
         private TMP_Text _coinsText;
-        public int CoinsAmount { get; set; }
+        public static int CoinsAmount { get; set; }
 
         private void Start()
         {

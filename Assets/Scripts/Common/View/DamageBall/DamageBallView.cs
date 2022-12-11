@@ -32,9 +32,9 @@ namespace Common.View.DamageBall
             _rigidbody.AddForce(new Vector3(0f, 0f, -9.81f), ForceMode.Acceleration);
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            var ball = collision.collider.GetComponent<BallView>();
+            var ball = other.GetComponent<BallView>();
             if (ball != null)
             {
                 _damageBallPool.ReturnToPool(this);

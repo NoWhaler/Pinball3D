@@ -1,26 +1,26 @@
 ﻿using Model;
-using UnityEngine;
+
 
 namespace Common.Gateway.Gate
 {
     public class GateGateway: IGateGateway
     {
-        private readonly GateModel _gateModelOne;
+        private readonly GateModel _gateModel;
 
         public GateGateway()
         {
-            _gateModelOne= new GateModel();
-            Debug.Log("I created Model");
+            _gateModel= new GateModel();
+            // Debug.Log("I created Model");
         }
 
         public void  SetGateHealth(int value)
         {
-            _gateModelOne.GateHealth = value;
+            _gateModel.GateHealth = value;
         }
 
         public int GetGateHealth()
         {
-            return _gateModelOne.GateHealth;
+            return _gateModel.GateHealth;
         }
 
     }

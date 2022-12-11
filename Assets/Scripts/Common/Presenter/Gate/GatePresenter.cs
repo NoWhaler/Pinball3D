@@ -21,9 +21,10 @@ namespace Common.Presenter.Gate
                 UpdateHealth(gateModel);
             });
             UpdateHealth(_gateUsecase.GateHealth.Value);
-            Debug.Log("Set presenter");
+            // Debug.Log("Set presenter");
         }
-        
+
+
         private void UpdateHealth(GateModel gateModel)
         {
             _gateHealth.Value = gateModel.GateHealth;

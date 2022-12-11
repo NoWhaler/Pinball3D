@@ -13,6 +13,6 @@ namespace Presenter
         
         public IReadOnlyReactiveProperty<int> BonusWallMultiplication { get; }
         
-        void SetValueToWall(BonusWallType bonusWallType);
+        void SetValueToWall(BonusWallType bonusWallType, int value);
     }
 }

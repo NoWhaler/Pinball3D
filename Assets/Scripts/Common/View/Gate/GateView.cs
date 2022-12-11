@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Common.Presenter.Gate;
 using Interfaces;
+using ObjectPooling;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -20,14 +21,13 @@ namespace Common.View.Gate
         private TMP_Text _gateHealthText;
         private Canvas _canvas;
 
-        private void Awake()
+        private GatePool _gatePool;
+
+        private void OnEnable()
         {
             _canvas = GetComponentInChildren<Canvas>();
             _gateHealthText = _canvas.GetComponentInChildren<TMP_Text>();
-        }
-
-        private void Start()
-        {
+            _gatePool = FindObjectOfType<GatePool>();
             _gatePresenter.SetHealthPoints(_value);
             var reactiveProperty = _gatePresenter.GateHealth;
             reactiveProperty.Subscribe((value) =>
@@ -35,12 +35,16 @@ namespace Common.View.Gate
                 SetValue(value);
                 if (value <= 0)
                 {
-                    gameObject.SetActive(false);
+                    _gatePool.ReturnToPool(this);
                 }
             }).AddTo(this);
-            Debug.Log("I created View");
         }
-        
+
+        private void OnDisable()
+        {
+            _value += 250;
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             var ballView = collision.collider.GetComponent<BallView>();

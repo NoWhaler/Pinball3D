@@ -29,7 +29,7 @@ namespace View
 
         private void Start()
         {
-           _bonusWallPresenter.SetValueToWall(_bonusWallType);
+           _bonusWallPresenter.SetValueToWall(_bonusWallType, _value);
             
             var reactiveProperty = _bonusWallType switch
             {

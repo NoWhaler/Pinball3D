@@ -28,11 +28,6 @@ namespace Common.Usecase.Bonus
             InitValue(BonusType.BonusVelocity);
             InitValue(BonusType.BonusTorque);
             InitValue(BonusType.BonusStrength);
-            
-            // InitCostValue(BonusType.Free);
-            // InitCostValue(BonusType.BonusVelocity);
-            // InitCostValue(BonusType.BonusTorque);
-            // InitCostValue(BonusType.BonusStrength);
         }
 
         public void SetValue(BonusType bonusType, float value)

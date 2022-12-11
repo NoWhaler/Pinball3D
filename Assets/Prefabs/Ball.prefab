@@ -183,26 +183,26 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0035057068
-        value: 0.34146118
-        inSlope: 0
-        outSlope: 0
+        time: 0.0070114136
+        value: 0.26829803
+        inSlope: -0.6645649
+        outSlope: -0.6645649
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.893048
       - serializedVersion: 3
-        time: 0.19595733
-        value: 0.21917118
-        inSlope: -1.3609947
-        outSlope: -1.3609947
+        time: 0.2520639
+        value: 0.12160647
+        inSlope: -0.48680112
+        outSlope: -0.48680112
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.72527856
         outWeight: 0.94905376
       - serializedVersion: 3
-        time: 0.3814637
-        value: 0.08346942
+        time: 0.52522
+        value: 0.04283142
         inSlope: -0.30096847
         outSlope: -0.30096847
         tangentMode: 0
@@ -523,3 +523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c5cebdcae0e4483862f15715d8a5604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _score: 0
+  _strength: 1
+  _comboView: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: e7d824ae46e941343bb9315a3f22a86f, type: 3}

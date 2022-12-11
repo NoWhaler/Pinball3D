@@ -43,13 +43,12 @@ namespace Common.View.Bonus
         public void OnFreeBonusClick()
         {
             OnButtonsClicked?.Invoke();
-            // _ballView.Score += (int)_bonusPresenter.FreeBonus.Value;
             _ballView.SetValueViaCost(-(int)_bonusPresenter.FreeBonus.Value);
         }
 
         public void OnVelocityBonusClick()
         {
-            if (_ballView.Score <= _bonusPresenter.VelocityBonusCost.Value) return;
+            if (_ballView.Score < _bonusPresenter.VelocityBonusCost.Value) return;
             OnButtonsClicked?.Invoke();
             _ballView.Gravity *= _bonusPresenter.VelocityBonus.Value;
             _ballView.SetValueViaCost(_bonusPresenter.VelocityBonusCost.Value);
@@ -57,27 +56,34 @@ namespace Common.View.Bonus
 
         public void OnStrengthBonusClick()
         {
-            if (_ballView.Score <= _bonusPresenter.StrengthBonusCost.Value) return;
+            if (_ballView.Score < _bonusPresenter.StrengthBonusCost.Value) return;
             OnButtonsClicked?.Invoke();
             _ballView.Strength *= _bonusPresenter.StrengthBonus.Value;
-            // _ballView.Score -= _bonusPresenter.StrengthBonusCost.Value;
             _ballView.SetValueViaCost(_bonusPresenter.StrengthBonusCost.Value);
         }
 
         public void OnTorqueBonusClick()
         {
+            if (_ballView.Score < _bonusPresenter.TorqueBonusCost.Value) return;
+            OnButtonsClicked?.Invoke();
+            _ballView.SetValueViaCost(_bonusPresenter.TorqueBonusCost.Value);
             foreach (var flipper in _flipperView)
             {
-                if (_ballView.Score <= _bonusPresenter.TorqueBonusCost.Value) continue;
-                OnButtonsClicked?.Invoke();
                 flipper.SpringForce *= _bonusPresenter.TorqueBonus.Value;
-                _ballView.SetValueViaCost(_bonusPresenter.TorqueBonusCost.Value);
             }
         }
 
         private void SetValue(float value)
         {
-            _textValue.text = value.ToString();
+            var someValue = Mathf.RoundToInt((value - 1) * 100f);
+            _textValue.text = _bonusType switch
+            {
+                BonusType.Free => $"Add {value} to the ball score",
+                BonusType.BonusVelocity => $"Increase ball's velocity by {someValue}%",
+                BonusType.BonusTorque => $"Increase all flipper's velocity by {someValue}%",
+                BonusType.BonusStrength => $"Increase ball's strength by {someValue}%",
+                _ => _textValue.text
+            };
         }
     }
 }

@@ -26,10 +26,14 @@ namespace Presenter
         public void Initialize(IBonusWallUsecase bonusWallUsecase)
         {
             _bonusWallUsecase = bonusWallUsecase;
-            UpdateCount(_bonusWallUsecase.Value.Value);
+            var disposable = _bonusWallUsecase.Value.Subscribe((bossModel) =>
+            {
+                UpdateValue(bossModel);
+            });
+            UpdateValue(_bonusWallUsecase.Value.Value);
         }
 
-        private void UpdateCount(Dictionary<BonusWallType, BonusWallModel> dict)
+        private void UpdateValue(Dictionary<BonusWallType, BonusWallModel> dict)
         {
             foreach (var (key, value) in dict)
             {
@@ -51,9 +55,9 @@ namespace Presenter
             }
         }
 
-        public void SetValueToWall(BonusWallType bonusWallType)
+        public void SetValueToWall(BonusWallType bonusWallType, int value)
         {
-            _bonusWallUsecase.SetValue(bonusWallType);
+            _bonusWallUsecase.SetValue(bonusWallType, value);
         }
     }
 }

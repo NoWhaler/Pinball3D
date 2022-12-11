@@ -162,7 +162,6 @@ namespace Usecase
         public void HitBoss()
         {
             var score = (int)(_ballGateway.GetBallValue() * _ballGateway.GetBallStrength());
-            // var bossGetDamageValue = score + (_bossGateway.GetBossHealth() - score);
 
             if (score > _bossGateway.GetBossHealth())
             {
@@ -196,12 +195,11 @@ namespace Usecase
         public void SetValueViaGate()
         {
             var score = _ballGateway.GetBallValue();
-            var gateHealth = score + (_gateGateway.GetGateHealth() - score);
 
             if (score > _gateGateway.GetGateHealth())
             {
+                score -= _gateGateway.GetGateHealth();
                 _gateGateway.SetGateHealth(0);
-                score -= gateHealth;
             }
             else
             {

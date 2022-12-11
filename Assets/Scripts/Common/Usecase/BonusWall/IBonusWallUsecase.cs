@@ -9,6 +9,6 @@ namespace Usecase
     {
         IReadOnlyReactiveProperty<Dictionary<BonusWallType, BonusWallModel>> Value { get; }
 
-        void SetValue(BonusWallType bonusWallType);
+        void SetValue(BonusWallType bonusWallType, int value);
     }
 }

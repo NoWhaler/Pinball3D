@@ -1,13 +1,12 @@
-﻿using System;
-using CollisionDetection;
+﻿using CollisionDetection;
 using Common.View.DamageBall;
 using Common.View.Gate;
 using Interfaces;
 using Managers;
 using Model.Enums;
-using MoreMountains.NiceVibrations;
 using Pinball.Presenter;
 using TMPro;
+using UI;
 using UnityEngine;
 using Zenject;
 using UniRx;
@@ -22,14 +21,6 @@ namespace View
 
         [SerializeField] private int _score;
         [SerializeField] private float _strength;
-        
-
-        public float Strength
-        {
-            get => _strength;
-            set => _strength = value;
-        }
-
         [SerializeField] private ComboView _comboView;
         [SerializeField] private AudioClip _audioClip;
 
@@ -37,7 +28,13 @@ namespace View
         private IBallPresenter _ballPresenter;
 
         public float Gravity { get; set; } = -9.81f;
-        public int Score { get => _score; set => _score = value; }
+        public int Score { get => _score; }
+        
+        public float Strength
+        {
+            get => _strength;
+            set => _strength = value;
+        }
 
         private void Awake()
         {
@@ -93,13 +90,19 @@ namespace View
             if (bossView != null)
             {
                 _ballPresenter.DealDamageToBoss();
-                // bool test = MMVibrationManager.HapticsSupported();
+                if (UIStateMachine.IsVibrationToggle)
+                {
+                    Handheld.Vibrate();
+                }
             }
 
             var trampoline = collision.collider.GetComponent<Trampoline>();
             if (trampoline != null)
             {
-                AudioManager.Instance.PlayAudioClip(_audioClip);
+                if (UIStateMachine.IsSoundToggle)
+                {
+                    AudioManager.Instance.PlayAudioClip(_audioClip);
+                }
             }
 
             var damageBall = collision.collider.GetComponent<DamageBallView>();

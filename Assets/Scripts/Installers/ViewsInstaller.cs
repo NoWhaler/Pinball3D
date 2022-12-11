@@ -8,6 +8,6 @@ public class ViewsInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<CoinsHolder>().FromInstance(_coinsHolder).AsSingle().NonLazy();
+        Container.Bind<CoinsHolder>().FromInstance(_coinsHolder).AsTransient().NonLazy();
     }
 }
